@@ -1,0 +1,11 @@
+eureka:
+  client:
+    enabled: false
+    
+    
+spring:
+  rabbitmq:
+    host: GMSW1
+    port: 5672
+    username: Shiva
+    password: Shiva123
