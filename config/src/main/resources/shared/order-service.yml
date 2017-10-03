@@ -1,0 +1,21 @@
+security:
+  oauth2:
+    client:
+      clientId: order-service
+      clientSecret: Mongo123
+      accessTokenUri: http://localhost:5000/uaa/oauth/token
+      grant-type: client_credentials
+      scope: server
+
+spring:
+  data:
+    mongodb:
+      host: localhost
+      username: user
+      password: Mongo123
+      database: customer-db
+      port: 27017
+
+server:
+  context-path: /orders
+  port: 9000
