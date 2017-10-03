@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>EmailServiceImpl.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">notification-service</a> &gt; <a href="index.source.html" class="el_package">com.piggymetrics.notification.service</a> &gt; <span class="el_source">EmailServiceImpl.java</span></div><h1>EmailServiceImpl.java</h1><pre class="source lang-java linenums">package com.piggymetrics.notification.service;
+
+import com.piggymetrics.notification.domain.NotificationType;
+import com.piggymetrics.notification.domain.Recipient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
+import org.springframework.core.env.Environment;
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.io.IOException;
+import java.text.MessageFormat;
+
+@Service
+@RefreshScope
+<span class="fc" id="L23">public class EmailServiceImpl implements EmailService {</span>
+
+<span class="fc" id="L25">	private final Logger log = LoggerFactory.getLogger(getClass());</span>
+
+	@Autowired
+	private JavaMailSender mailSender;
+
+	@Autowired
+	private Environment env;
+
+	@Override
+	public void send(NotificationType type, Recipient recipient, String attachment) throws MessagingException, IOException {
+
+<span class="fc" id="L36">		final String subject = env.getProperty(type.getSubject());</span>
+<span class="fc" id="L37">		final String text = MessageFormat.format(env.getProperty(type.getText()), recipient.getAccountName());</span>
+		
+	
+<span class="fc" id="L40">		log.info(&quot;Text message is....... {}&quot;,text);</span>
+
+<span class="fc" id="L42">		MimeMessage message = mailSender.createMimeMessage();   </span>
+<span class="fc" id="L43">		MimeMessageHelper helper = new MimeMessageHelper(message, true);</span>
+<span class="fc" id="L44">		helper.setFrom(&quot;test@test.com&quot;);  //added by Shiva</span>
+<span class="fc" id="L45">		helper.setTo(recipient.getEmail());</span>
+<span class="fc" id="L46">		helper.setSubject(subject);</span>
+<span class="fc" id="L47">		helper.setText(text);</span>
+		
+
+<span class="fc bfc" id="L50" title="All 2 branches covered.">		if (StringUtils.hasLength(attachment)) {</span>
+<span class="fc" id="L51">			helper.addAttachment(env.getProperty(type.getAttachment()), new ByteArrayResource(attachment.getBytes()));</span>
+		}
+
+<span class="fc" id="L54">		mailSender.send(message);</span>
+
+<span class="fc" id="L56">		log.info(&quot;{} email notification has been send to {}&quot;, type, recipient.getEmail());</span>
+<span class="fc" id="L57">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>

@@ -1,0 +1,14 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+notification-service,com.piggymetrics.notification.domain,NotificationType,5,57,0,0,0,11,1,6,1,6
+notification-service,com.piggymetrics.notification.domain,Frequency,5,70,0,2,0,10,1,7,1,6
+notification-service,com.piggymetrics.notification.domain,NotificationSettings,0,24,0,0,0,10,0,7,0,7
+notification-service,com.piggymetrics.notification.domain,Recipient,0,45,0,0,0,11,0,8,0,8
+notification-service,com.piggymetrics.notification,NotificationServiceApplication.CustomConversionsConfig,0,22,0,0,0,2,0,2,0,2
+notification-service,com.piggymetrics.notification,NotificationServiceApplication,5,22,0,0,2,4,1,4,1,4
+notification-service,com.piggymetrics.notification.repository.converter,FrequencyWriterConverter,0,7,0,0,0,2,0,2,0,2
+notification-service,com.piggymetrics.notification.repository.converter,FrequencyReaderConverter,0,7,0,0,0,2,0,2,0,2
+notification-service,com.piggymetrics.notification.controller,RecipientController,0,16,0,0,0,3,0,3,0,3
+notification-service,com.piggymetrics.notification.service,NotificationServiceImpl,0,108,0,0,0,25,0,7,0,7
+notification-service,com.piggymetrics.notification.service,EmailServiceImpl,0,83,0,2,0,16,0,3,0,2
+notification-service,com.piggymetrics.notification.service,RecipientServiceImpl,4,72,1,4,1,19,1,8,0,6
+notification-service,com.piggymetrics.notification.service,RecipientServiceImpl.new Object() {...},2,17,0,0,0,1,0,1,0,1

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>RecipientServiceImpl.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">notification-service</a> &gt; <a href="index.source.html" class="el_package">com.piggymetrics.notification.service</a> &gt; <span class="el_source">RecipientServiceImpl.java</span></div><h1>RecipientServiceImpl.java</h1><pre class="source lang-java linenums">package com.piggymetrics.notification.service;
+
+import com.piggymetrics.notification.domain.NotificationType;
+import com.piggymetrics.notification.domain.Recipient;
+import com.piggymetrics.notification.repository.RecipientRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
+
+import java.util.Date;
+import java.util.List;
+
+@Service
+<span class="fc" id="L16">public class RecipientServiceImpl implements RecipientService {</span>
+
+<span class="fc" id="L18">	private final Logger log = LoggerFactory.getLogger(getClass());</span>
+
+	@Autowired
+	private RecipientRepository repository;
+
+	@Override
+	public Recipient findByAccountName(String accountName) {
+<span class="fc" id="L25">		Assert.hasLength(accountName);</span>
+<span class="fc" id="L26">		return repository.findByAccountName(accountName);</span>
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Recipient save(String accountName, Recipient recipient) {
+
+<span class="fc" id="L35">		recipient.setAccountName(accountName);</span>
+<span class="fc" id="L36">		recipient.getScheduledNotifications().values()</span>
+<span class="fc" id="L37">				.forEach(settings -&gt; {</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">					if (settings.getLastNotified() == null) {</span>
+<span class="fc" id="L39">						settings.setLastNotified(new Date());</span>
+					}
+<span class="fc" id="L41">				});</span>
+
+<span class="fc" id="L43">		repository.save(recipient);</span>
+
+<span class="fc" id="L45">		log.info(&quot;recipient {} settings has been updated&quot;, recipient);</span>
+
+<span class="fc" id="L47">		return recipient;</span>
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List&lt;Recipient&gt; findReadyToNotify(NotificationType type) {
+<span class="pc bpc" id="L55" title="1 of 3 branches missed.">		switch (type) {</span>
+			case BACKUP:
+<span class="fc" id="L57">				return repository.findReadyForBackup();</span>
+			case REMIND:
+<span class="fc" id="L59">				return repository.findReadyForRemind();</span>
+			default:
+<span class="nc" id="L61">				throw new IllegalArgumentException();</span>
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void markNotified(NotificationType type, Recipient recipient) {
+<span class="fc" id="L70">		recipient.getScheduledNotifications().get(type).setLastNotified(new Date());</span>
+<span class="fc" id="L71">		repository.save(recipient);</span>
+<span class="fc" id="L72">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.6.201602180812</span></div></body></html>
