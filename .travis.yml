@@ -15,3 +15,23 @@ deploy:
     repo: sprhegde/OrderMgmtRepo
     all_branches: true
     tags: true
+    
+sudo: required
+services:
+  - docker
+
+env:
+  global:
+  - secure: kgYa6pXBHVWegnPBvimsLAOFZCvLIfaVDNR3FNhVmppkg1BcJy49w3J7h7Wp676HKMHf7cFX3Oju5dIaJsHrerXB7jWrmtqxM76WCDE6njH77xDOXRQl1tewFCe1GATj8dvyeqNm99tbhtm/+Ztp6IdsznmN3OzHKoz3ddbEJxm5kuiLf3A5BoeGDOK+QTUXbqF35n4hecCQZEp4v0RWYehT6w78i7ze/i6chfKEiLSGiph4qLsX4AJCI3Yi2ohdCaDOWYow8eOt5Pt7sT71quoEXMBLHsx063m/XpxeRDklJPM4MSicFl46NmqnYFCqEBs9QV9jkcL6/VGCewwofNnH2MocrQl5ItWBOs1zgaFQ5hhw9uOKPwiYVG/xWXQTuPgsJfOZ6VirkNpfwJqsO9nvHbFqGVP9KAViiM1B9+2/Z8TMmQP/EOSDDwVjK1d0fhoeAIEzKW4No+HgQop0EDejd5NQkUnTmG5D6Y8W5S/JbBOISp2FGWvRIc33Iop/tcZbHCgi6jRXGmK2pgi5Dwc3etVrXkBqXI7vkg127CP3G/6GxXMR6/gCxX8X/QgJURTPN4Bj5E+HRT4eVqBSsE3FLfh17wYnlG/2dVKTPFzXOki1z0+Dte7l+5bY06a70Tyu/C0gTlS91cXrmGWfGVjKJAkyS9HJbqToCKoHdZg=
+  - secure: VOmsuu18Yj2BCQmidcetf1OfRgrEWvoSbVLV/nR0WbFLV8d9CiSlz9Ekb1psRMeGxt3oXEiBBrgpDiRDtgJxV34nJpmAwJcZFHtY1r0ZLeE092AMx5f0IAQ7IwI852/qB7LE3YDz/NVF01IyhDzoSk3pgdJja5S35l5s1E60LKhbj5B4vk20+SPnOvAIOEGkYyoPA/sOA1Yk4E/1RP1Y57jqqEV6OJqFr8lYCwG9//7L6LGzfRVAoxTsgnIU2AfCVJ7xSsDeJsvJCmXlrO9qUPijcrhEPF5wjdAip3NPBczDPyS5dEKcXqKBXIJDu7o484Bpg470O8DZ3ENpkJhDwYuHXHGa3Zjvg/UktKxS+pifKTS4MXLglvA01ADjcoRoYgpWVJMtlgBlCUIYj4K7YfAXT4EDkVLiGhvwmSxhK5T8PchgrnILUwv6ot7MZCB9nr3DH1SLJ5hqPQ04/AzJzmwLVuFBqI9TNc0oVNJQaXRmafmKkJsa/sSPzn9fIDiCYh/1BGvXHXxjH7FN2G2QHx2HgNjTbmeKLHsHRiLTgJ0I5ATVRO+M72HiwLnyqmetjj/Pa/HqF1METmzJ5fI0RP1v/uGPIiXCdC5Qk4Qg108NepDjcteGkmUIVwUi9hBEmh2SVbNy1+45Mm5cgMY9tJ4ksTSAL31SGTlqEAu8rLA=
+  - secure: OwQh0EekJYVtLH8gc0vWVEfyN76nzKXX2hWvQmtrEY99Y5N/7eWNeaw7bNwl3epgwluh7W4fl5NyqcsED8UVsDvED7oZcyvoF9yb8Eo0ud4nOifKUV632qP98LpJeLomxb8sYAp4Jbr86v2Z7MgdyO4j/Y7IKxvPO/IJQ9lEbHjDPTSIuNxmcmAlnmq8z97BeZZhqFtYiPkXxRgLwVB9VYJKPPfj50vSMhKZiuCe+t0Gv+QhO9eubj6qsRUSIvkfqJoGY3OIQV+v9QjVztSu/fBQgE9jJe9Gc9vr1f5avkGsOTqcwSlVNyRAfpSQ+w5qNc+MT19U4kfXuSDCeb1t2RCED8a7xPFtggGcrrSw8eg/dCXsWh6WZJP8kVL53Y5IeEdLHV8lUxxuNLftMDSqDeBWBP7j+0xlyOEi5a9EmUgetNbJly5HBodRyDC7Q6JWidGJLsaP26vSL6mHbZDXt+NKNQ2WPPS9//wbGtU7/FObwl9C0pS2zkTo0i6dgacWjeEWZ0/hA8LrhYhKMavTA8j8dkxUvX6ictGy1HknIl6Y4RKGzvNrP7LQsYgMhnTp6JLeYg3u4a2k0Stu8El9/Klq3RcyOzzZj//FreNLZM9kXxVe/dCkXesaNjL1+fcmcYDsBTagt6Ogc/G9a8NUBB8pYsZpJsFMou/Is8Jii8k=
+  - COMMIT=${TRAVIS_COMMIT::8}
+  
+after_deploy:
+  - bash <(curl -s https://codecov.io/bash)
+  - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+  - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
+  - export SAMPLE=sprhegde/config
+  - docker build -t $SAMPLE:$COMMIT ./config
+  - docker tag $SAMPLE:$COMMIT $SAMPLE:$TAG
+  - docker push $SAMPLE
