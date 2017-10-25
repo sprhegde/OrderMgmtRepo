@@ -5,7 +5,7 @@ before_install:
 - chmod +x mvnw
 
 script:
-- mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+- mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
 deploy:
   provider: releases
   api_key:
