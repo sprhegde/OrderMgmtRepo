@@ -20,7 +20,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		 <start-class>com.piggymetrics.config.ConfigApplication</start-class>
+		 <start-class>com.ordermgmt.config.ConfigApplication</start-class>
 		<java.version>1.8</java.version>
 	</properties>
 
