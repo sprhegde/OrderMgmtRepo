@@ -1,6 +1,18 @@
 language: java
 jdk: oraclejdk8
-
+before_install:
+- chmod +x mvnw
+script:
+- mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+deploy:
+  provider: releases
+  api_key:
+    secure: sh7oRlzgKaT7CevmNDz9/nqelUwUz+MYeafXltWd1r3PSP/7rryNoscjlWvbHy2sDYpCHR1+r8Sc9R1UNFOYmI8lvbrxVyWrZ3SLWE1E/Y1m/GEUO5rlz79dFTIl9TgVajGcU7SaG7ywYVQ3YBQfpmZS4hSWjiDPuSDOk/b7Vc/ZGha8X8yp4dhtqQRDKNwH1KhKaK3yxFbNSckbfZiOmr3vov5Shm16tQKHZKZH5f1Pqp9U0Kn05OaiFuNJidWBdOomqGEX97WSMc8uBAHSukSoLLz8Dhzn5s82MPMpJv4uCUNsu2T9YZlPxSc1K5vKAeU69AGDL4mScs5iyt3avTOgxSTpPucVdRpIhQa5l4eCV9Z87jh0ECD/7+8CWyRgoipRcrswXxfeNmzRHL6zhUW8Cihjs0EspYU7wd6nV2TJ0JwiYyixCp7fN3tBegFoGBYCR+LpCQby4krvP2Quczti6rF3MqprHAAXbMR+FC22u0jhlXrrz2Rh0ZSEi4WCri3cPIBVMo6+TnDn/dBkJXl3XywfKa5Cb/4oxS21toevJeoqjrFFGdLJm3rC5xMupuIyTjzxPwxfrISzVqlFtwJgLDnCbZc107bcEohI176kuuBHW2AKS+f6BUHL+NI+y8DsT46fwEUw2PT90/ZTR9VX+SR/jBSx0/JlDNOOTtc=
+  file: "/home/travis/.m2/repository/com/ordermgmt/config/1.0.0-SNAPSHOT/config-1.0.0-SNAPSHOT.jar"
+  on:
+    repo: sprhegde/OrderMgmtRepo
+    all_branches: true
+    tags: true
 sudo: required
 services:
 - docker
