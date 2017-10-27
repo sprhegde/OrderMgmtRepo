@@ -1,18 +1,3 @@
-language: java
-jdk: oraclejdk8
-before_install:
-- chmod +x mvnw
-script:
-- mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-deploy:
-  provider: releases
-  api_key:
-    secure: sh7oRlzgKaT7CevmNDz9/nqelUwUz+MYeafXltWd1r3PSP/7rryNoscjlWvbHy2sDYpCHR1+r8Sc9R1UNFOYmI8lvbrxVyWrZ3SLWE1E/Y1m/GEUO5rlz79dFTIl9TgVajGcU7SaG7ywYVQ3YBQfpmZS4hSWjiDPuSDOk/b7Vc/ZGha8X8yp4dhtqQRDKNwH1KhKaK3yxFbNSckbfZiOmr3vov5Shm16tQKHZKZH5f1Pqp9U0Kn05OaiFuNJidWBdOomqGEX97WSMc8uBAHSukSoLLz8Dhzn5s82MPMpJv4uCUNsu2T9YZlPxSc1K5vKAeU69AGDL4mScs5iyt3avTOgxSTpPucVdRpIhQa5l4eCV9Z87jh0ECD/7+8CWyRgoipRcrswXxfeNmzRHL6zhUW8Cihjs0EspYU7wd6nV2TJ0JwiYyixCp7fN3tBegFoGBYCR+LpCQby4krvP2Quczti6rF3MqprHAAXbMR+FC22u0jhlXrrz2Rh0ZSEi4WCri3cPIBVMo6+TnDn/dBkJXl3XywfKa5Cb/4oxS21toevJeoqjrFFGdLJm3rC5xMupuIyTjzxPwxfrISzVqlFtwJgLDnCbZc107bcEohI176kuuBHW2AKS+f6BUHL+NI+y8DsT46fwEUw2PT90/ZTR9VX+SR/jBSx0/JlDNOOTtc=
-  file: "/home/travis/.m2/repository/com/ordermgmt/config/1.0.0-SNAPSHOT/config-1.0.0-SNAPSHOT.jar"
-  on:
-    repo: sprhegde/OrderMgmtRepo
-    all_branches: true
-    tags: true
 sudo: required
 services:
 - docker
@@ -22,12 +7,11 @@ env:
   - secure: JWFmn+SjILucEoyJ9+/xonNVcU4oxZdCppAOGmi1mmmQziQE8TW/5186dZURfeAU83aJN3dmzmvT7brH7ZcbkuJdxQwjQsAqt/ZTPImXxZKEqWTinDdL4VhXNOTpmqC02oOhu+bY+FsMzeGSQiIIws5yMYj0BA03tj8epNwgp6XnLG+7I5YHSqWUo5yJEO9ovDk3UpDwEVFsa0q8cKOaGvSxetYxTLQ0MDV2vaggDtTOiA8Vo0Oe8SM3kJ1eOQWUcB3LuSEyDaqaWCb4u6R9vXZImmFP8ikIm1+7VVaepXWlf9lPLLCZxZYEHV86mxHuZL2cjbObHjJ9KHJG1JDyuxc5EHBBt/WnW1LViahIXy5Aqrh0nDGSmmAUVVjhGIE7dKsSv5AkvZM1EcsFomq9EU6ZtyDB6/shV1onbijUIbfkyWplsQWNuIG0ifm9TJ2YIe6kzOikEswTC3W5AxfI5NDy1A5RhdM9SGoVpAcR/lFgjpki1fbF3h6ZFx9JM1oBjMxwbeM6sfXYWvsrVI85gsG0P8XnUetAZEfJQTV4ABXbXZvYd1dCRVPjUL32zAE9zmVNWGvG/oSUz9VAmd6QHUEZ/wzY/B+uCVxa+fi4XkCOwo9HbCUREaT8m0WpHUXMeaT+uc+cF9PWRYAZTS6AjPKuK0Xq5C2f8a2gfu/832s=
   - secure: Ir4CUbu6BPRYOtuRKhsQFJq4Bn10/rJVotaHycojZReEfPgpDQpAfU1pjRJla2Cly4Smi9pL2UGMAS1/3Ie0ra0I97be18DWmlaUl5Xepp455YhcKslhKU638a3nuQGasqngQ8q5oBzBsG7/eLUhRhoVQQ+NgN4by5YLRB4D9o239vJ5IWkfRElEavWqAYJrXbiq3MK7l+quCuMzJJNXw71sU4Eab/rHW9T7OLJfHMjdei13lbkR9iUki1AT7HkvPeEvhDIqfrFBXd1RsKcGfSJAqVkHLCtirCCuD1bAOvqH982CrnBTnGmOFjezJpd+EIRYEajtdr2wAwM/g8XqEblVdQRosorixputzvS+XzfeNOudwFBP/NkXXJ+RyBDnD8Nnblk4vyZN+Ivg+IktlWfezqS5mT4ABumwYLflA8LLtZQHwHdNqHU+YSYGW/0Mu5mXfQPnraaEYCQ7DZdp8S5pxNN9D8BQwMCuSeQDSjOy5n/a+JalmjdNyb6b/GYLqION0WZ+I829yD04tGVwS2rmoMJj24LIQBHKnvKJ/KYfU9F33PAR9fXZaRHCa1tuo65RiHxQKCPUvvrSwsYqDWmJm5C//HbYl12wkTnghfaMe9W5lHAOr7EV8JFqFq6mGLXwR4G+nyOpac56tmP+PFLR3b7+/yEaXWCrHFHz1YE=
   - COMMIT=${TRAVIS_COMMIT::8}
-  
-after_deploy:
+
 - bash <(curl -s https://codecov.io/bash)
 - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
-- export SAMPLE=sprhegde/config
-- docker build -t $SAMPLE:$COMMIT ./config
+- export SAMPLE=sprhegde/mongodb
+- docker build -t $SAMPLE:$COMMIT ./mongodb
 - docker tag $SAMPLE:$COMMIT $SAMPLE:$TAG
 - docker push $SAMPLE
