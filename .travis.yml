@@ -1,3 +1,6 @@
+language: java
+jdk: oraclejdk8
+
 sudo: required
 services:
 - docker
@@ -12,6 +15,6 @@ env:
   - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
   - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
   - export SAMPLE=sprhegde/mongodb
-  - docker build -t $SAMPLE:$COMMIT ./mongodb1
+  - docker build -t $SAMPLE:$COMMIT ./mongodb
   - docker tag $SAMPLE:$COMMIT $SAMPLE:$TAG
   - docker push $SAMPLE
