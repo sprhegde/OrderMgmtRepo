@@ -3,7 +3,8 @@ security:
     client:
       clientId: notification-service
       clientSecret: Shiva123
-      accessTokenUri: http://localhost:5000/uaa/oauth/token
+      #accessTokenUri: http://localhost:5000/uaa/oauth/token
+      accessTokenUri: http://auth-service:5000/uaa/oauth/token
       grant-type: client_credentials
       scope: server
 
@@ -17,13 +18,13 @@ welcome:
     subject: Account is created
 
 spring:
-  data:
-    mongodb:
-      host: localhost
-      username: user
-      password: Shiva123
-      database: notification-piggymetrics
-      port: 27017
+  #data:
+    #mongodb:
+      #host: localhost
+      #username: user
+      #password: Shiva123
+      #database: notification-piggymetrics
+      #port: 27017
   mail:
     host: smtp-americas.hp.com
  

@@ -3,17 +3,20 @@ security:
     client:
       clientId: customer-service
       clientSecret: Shiva123
-      accessTokenUri: http://localhost:5000/uaa/oauth/token
+      #accessTokenUri: http://localhost:5000/uaa/oauth/token
+      accessTokenUri: http://auth-service:5000/uaa/oauth/token
       grant-type: client_credentials
       scope: server
 
 spring:
   data:
     mongodb:
-      host: localhost
+      #host: localhost
+      host: customer-mongodb
       username: user
       password: Shiva123
-      database: customer-db
+      #database: customer-db
+      database: ordermgmtdb
       port: 27017
 
 server:
