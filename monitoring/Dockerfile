@@ -1,7 +1,7 @@
 FROM java:8-jre
-MAINTAINER Alexander Lukyanchikov <sqshq@sqshq.com>
+MAINTAINER Shivaprasad Hegde <sprhegde@gmail.com>
 
-ADD ./target/monitoring.jar /app/
-CMD ["java", "-Xmx200m", "-jar", "/app/monitoring.jar"]
+ADD https://github.com/sprhegde/OrderMgmtRepo/releases/download/v0.8/monitoring-1.0.0-SNAPSHOT.jar /app/
+CMD ["java", "-Xmx200m", "-jar", "/app/monitoring-1.0.0-SNAPSHOT.jar"]
 
 EXPOSE 8989 8080

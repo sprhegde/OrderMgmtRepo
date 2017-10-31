@@ -1,7 +1,7 @@
 FROM java:8-jre
-MAINTAINER Alexander Lukyanchikov <sqshq@sqshq.com>
+MAINTAINER Shivaprasad Hegde <sprhegde@gmail.com>
 
-ADD ./target/registry.jar /app/
-CMD ["java", "-Xmx200m", "-jar", "/app/registry.jar"]
+ADD https://github.com/sprhegde/OrderMgmtRepo/releases/download/v0.8/registry-1.0.0-SNAPSHOT.jar /app/
+CMD ["java", "-Xmx200m", "-jar", "/app/registry-1.0.0-SNAPSHOT.jar"]
 
 EXPOSE 8761
