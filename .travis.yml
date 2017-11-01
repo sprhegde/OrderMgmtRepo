@@ -10,11 +10,11 @@ deploy:
     secure: sh7oRlzgKaT7CevmNDz9/nqelUwUz+MYeafXltWd1r3PSP/7rryNoscjlWvbHy2sDYpCHR1+r8Sc9R1UNFOYmI8lvbrxVyWrZ3SLWE1E/Y1m/GEUO5rlz79dFTIl9TgVajGcU7SaG7ywYVQ3YBQfpmZS4hSWjiDPuSDOk/b7Vc/ZGha8X8yp4dhtqQRDKNwH1KhKaK3yxFbNSckbfZiOmr3vov5Shm16tQKHZKZH5f1Pqp9U0Kn05OaiFuNJidWBdOomqGEX97WSMc8uBAHSukSoLLz8Dhzn5s82MPMpJv4uCUNsu2T9YZlPxSc1K5vKAeU69AGDL4mScs5iyt3avTOgxSTpPucVdRpIhQa5l4eCV9Z87jh0ECD/7+8CWyRgoipRcrswXxfeNmzRHL6zhUW8Cihjs0EspYU7wd6nV2TJ0JwiYyixCp7fN3tBegFoGBYCR+LpCQby4krvP2Quczti6rF3MqprHAAXbMR+FC22u0jhlXrrz2Rh0ZSEi4WCri3cPIBVMo6+TnDn/dBkJXl3XywfKa5Cb/4oxS21toevJeoqjrFFGdLJm3rC5xMupuIyTjzxPwxfrISzVqlFtwJgLDnCbZc107bcEohI176kuuBHW2AKS+f6BUHL+NI+y8DsT46fwEUw2PT90/ZTR9VX+SR/jBSx0/JlDNOOTtc=
   file:
     - "/home/travis/.m2/repository/com/ordermgmt/config/1.0.0-SNAPSHOT/config-1.0.0-SNAPSHOT.jar"
-    - "/home/travis/.m2/repository/com/ordermgmt/monitoring/1.0.0-SNAPSHOT/monitoring-1.0.0-SNAPSHOT.jar"
-    - "/home/travis/.m2/repository/com/ordermgmt/registry/1.0.0-SNAPSHOT/registry-1.0.0-SNAPSHOT.jar"
-    - "/home/travis/.m2/repository/com/ordermgmt/gateway/1.0.0-SNAPSHOT/gateway-1.0.0-SNAPSHOT.jar"
-    - "/home/travis/.m2/repository/com/ordermgmt/auth-service/1.0.0-SNAPSHOT/auth-service-1.0.0-SNAPSHOT.jar"
-    - "/home/travis/.m2/repository/com/ordermgmt/customer-service/1.0.0-SNAPSHOT/customer-service-1.0.0-SNAPSHOT.jar"
+    - "/home/travis/.m2/repository/com/ordermgmt/monitoring/0.0.1-SNAPSHOT/monitoring-0.0.1-SNAPSHOT.jar"
+    - "/home/travis/.m2/repository/com/ordermgmt/registry/0.0.1-SNAPSHOT/registry-0.0.1-SNAPSHOT.jar"
+    - "/home/travis/.m2/repository/com/ordermgmt/gateway/1.0-SNAPSHOT/gateway-1.0-SNAPSHOT.jar"
+    - "/home/travis/.m2/repository/com/ordermgmt/auth-service/1.0-SNAPSHOT/auth-service-1.0-SNAPSHOT.jar"
+    - "/home/travis/.m2/repository/com/ordermgmt/customer-service/1.0-SNAPSHOT/customer-service-1.0-SNAPSHOT.jar"
     - "/home/travis/.m2/repository/com/ordermgmt/notification-service/1.0.0-SNAPSHOT/notification-service-1.0.0-SNAPSHOT.jar"    
   on:
     repo: sprhegde/OrderMgmtRepo
