@@ -24,6 +24,10 @@ import org.springframework.security.oauth2.provider.token.ResourceServerTokenSer
 
 import com.ordermgmt.customer.security.CustomUserInfoTokenServices;
 
+/*
+ * CustomerApplication main spring boot file
+ */
+
 @SpringBootApplication
 @EnableResourceServer
 @EnableDiscoveryClient
