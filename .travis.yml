@@ -21,6 +21,8 @@ deploy:
     all_branches: true
     tags: true
 sudo: required
+dist: trusty
+group: deprecated-2017Q4
 services:
 - docker
 env:
@@ -74,3 +76,9 @@ after_deploy:
 - docker build -t $MONITORING:$COMMIT ./monitoring
 - docker tag $MONITORING:$COMMIT $MONITORING:$TAG
 - docker push $MONITORING
+
+  # PRODUCT SERVICE
+- export PRODUCT_SERVICE=sprhegde/product-service
+- docker build -t $PRODUCT_SERVICE:$COMMIT ./product-service
+- docker tag $PRODUCT_SERVICE:$COMMIT $PRODUCT_SERVICE:$TAG
+- docker push $PRODUCT_SERVICE
