@@ -2,13 +2,12 @@ spring:
   cloud:
     config:
       server:
-        #native:
+        native:
+          search-locations: /home/sprhegde/order-mgmt/config
+          #search-locations: C:/ORDER_MGMT_CONFIG_FILES/shared
           #search-locations: classpath:/shared
-        git:
-          uri: https://github.com/sprhegde/OrderMgmtRepo
-          username: sprhegde
-          password: Shiva123
-          searchPaths: /config/src/main/resources/shared
+  profiles:
+     active: native
 
 server:
   port: 8888

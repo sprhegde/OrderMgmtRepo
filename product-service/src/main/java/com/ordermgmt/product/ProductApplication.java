@@ -40,6 +40,8 @@ public class ProductApplication extends ResourceServerConfigurerAdapter {
 	public static void main(String[] args) {
 		SpringApplication.run(ProductApplication.class, args);
 	}
+	
+	
 
 	@Bean
 	@ConfigurationProperties(prefix = "security.oauth2.client")
@@ -65,7 +67,7 @@ public class ProductApplication extends ResourceServerConfigurerAdapter {
 	@Override
 	public void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-				.antMatchers("/" , "/demo").permitAll()
-				.anyRequest().authenticated();
+				.antMatchers("/" , "/products").permitAll();
+
 	}
 }

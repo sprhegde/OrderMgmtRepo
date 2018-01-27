@@ -13,6 +13,8 @@ import org.springframework.util.StringUtils;
 
 import com.ordermgmt.notification.domain.NotificationType;
 import com.ordermgmt.notification.domain.User;
+import com.sendgrid.SendGrid;
+import com.sendgrid.SendGridException;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -39,18 +41,37 @@ public class EmailServiceImpl implements EmailService {
 
 		MimeMessage message = mailSender.createMimeMessage();
 
-		MimeMessageHelper helper = new MimeMessageHelper(message, true);
-		helper.setFrom("OrderMgmt@test.com");
-		helper.setTo(user.getEmail());
-		helper.setSubject(subject);
-		helper.setText(text);
+//		MimeMessageHelper helper = new MimeMessageHelper(message, true);
+//		helper.setFrom("OrderMgmt@test.com");
+//		helper.setTo(user.getEmail());
+//		helper.setSubject(subject);
+//		helper.setText(text);
+//
+//		if (StringUtils.hasLength(attachment)) {
+//			helper.addAttachment(env.getProperty(type.getAttachment()), new ByteArrayResource(attachment.getBytes()));
+//		}
+//
+//		mailSender.send(message);
+		
+		SendGrid sendgrid = new SendGrid(env.getProperty("sendgrid.apikey.value"));
+		SendGrid.Email welcomeMail = new SendGrid.Email();
+		welcomeMail.addTo(user.getEmail());
+		welcomeMail.addToName("Shiva");
+		welcomeMail.setFrom("OrderMgmt@test.com");
+		welcomeMail.setSubject(subject);
+		welcomeMail.setText(text);
 
-		if (StringUtils.hasLength(attachment)) {
-			helper.addAttachment(env.getProperty(type.getAttachment()), new ByteArrayResource(attachment.getBytes()));
+		try {
+		    SendGrid.Response response = sendgrid.send(welcomeMail);
+		    System.out.println(response.getCode()); 
+		    System.out.println(response.getMessage());
+		} catch (SendGridException sge) {
+			System.out.println("ERROR IS"+sge.getMessage());
 		}
-
-		mailSender.send(message);
 
 		log.info("{} email notification has been send to {}", type, user.getEmail());
 	}
+	
+	
+	
 }
