@@ -10,7 +10,7 @@ security:
 spring:
   data:
     mongodb:
-      host: localhost
+      host: product-mongodb
       username: user
       password: Mongo123
       database: product-db
