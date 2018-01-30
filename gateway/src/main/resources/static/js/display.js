@@ -1,7 +1,8 @@
 $(document).ready(function(){
+	$(".plus").click(function() {
 	 $.ajax({
 		    type: "GET",
-			url: "http://localhost:7000/products/allproducts",
+			url: "products/allproducts",
 			dataType: "json",
 			async: "false",
 			crossDomain: true,
@@ -29,7 +30,8 @@ $(document).ready(function(){
 			error: function(jqXHR, textStatus, errorThrown) {
                       alert(jqXHR+" - "+textStatus+" - "+errorThrown);
             }
-		});
+	});
+    });
 });
 
 
