@@ -10,7 +10,7 @@ $(document).ready(function(){
 		    success: function(data) {
 			//alert(data);
 				 var html = '';
-
+				 $('table').find("tr:gt(0)").remove();
 		            for ( var i in data ) {
 		            
 		               
