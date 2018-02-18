@@ -42,7 +42,7 @@ services:
   auth-mongodb:
     environment:
       MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: gcr.io/voltaic-azimuth-192414/mongodb
+    image: gcr.io/voltaic-azimuth-192414/mongodb:v2.2
     volumes:
       - /home/sprhegde/order-mgmt/auth-db:/data/db
     restart: always
@@ -58,7 +58,7 @@ services:
   customer-mongodb:
     environment:
       MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: gcr.io/voltaic-azimuth-192414/mongodb  
+    image: gcr.io/voltaic-azimuth-192414/mongodb:v2.2  
     volumes:
       - /home/sprhegde/order-mgmt/customer-db:/data/db
     restart: always
@@ -74,7 +74,7 @@ services:
   product-mongodb:
     environment:
       MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: gcr.io/voltaic-azimuth-192414/mongodb  
+    image: gcr.io/voltaic-azimuth-192414/mongodb:v2.2
     volumes:
       - /home/sprhegde/order-mgmt/product-db:/data/db
     restart: always  

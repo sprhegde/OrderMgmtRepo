@@ -46,76 +46,29 @@ after_deploy:
 - gcloud --quiet components update kubectl
 - gcloud --quiet config set project voltaic-azimuth-192414
 - gcloud --quiet config set compute/zone us-central1-a
-- docker login -u _json_key -p "$(cat sprhegde-d8b0d97ec19d.json)"  https://gcr.io
-- export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
-
-# MONGODB
-- export MONGO=gcr.io/voltaic-azimuth-192414/mongodb
-- docker build -t $MONGO:$COMMIT ./mongodb
-- docker tag $MONGO:$COMMIT $MONGO:$TAG
-- docker push $MONGO 
-
-# CONFIG
-- export CONFIG=gcr.io/voltaic-azimuth-192414/config
-- docker build -t $CONFIG:$COMMIT ./config
-- docker tag $CONFIG:$COMMIT $CONFIG:$TAG
-- docker push $CONFIG
-
-# REGISTRY
-- export REGISTRY=gcr.io/voltaic-azimuth-192414/registry
-- docker build -t $REGISTRY:$COMMIT ./registry
-- docker tag $REGISTRY:$COMMIT $REGISTRY:$TAG
-- docker push $REGISTRY
-
-  # GATEWAY
-- export GATEWAY=gcr.io/voltaic-azimuth-192414/gateway
-- docker build -t $GATEWAY:$COMMIT ./gateway
-- docker tag $GATEWAY:$COMMIT $GATEWAY:$TAG
-- docker push $GATEWAY
-
-  # AUTH SERVICE
-- export AUTH_SERVICE=gcr.io/voltaic-azimuth-192414/auth-service
-- docker build -t $AUTH_SERVICE:$COMMIT ./auth-service
-- docker tag $AUTH_SERVICE:$COMMIT $AUTH_SERVICE:$TAG
-- docker push $AUTH_SERVICE
-
-  # CUSTOMER SERVICE
-- export CUSTOMER_SERVICE=gcr.io/voltaic-azimuth-192414/customer-service
-- docker build -t $CUSTOMER_SERVICE:$COMMIT ./customer-service
-- docker tag $CUSTOMER_SERVICE:$COMMIT $CUSTOMER_SERVICE:$TAG
-- docker push $CUSTOMER_SERVICE
-
-  # NOTIFICATION_SERVICE
-- export NOTIFICATION_SERVICE=gcr.io/voltaic-azimuth-192414/notification-service
-- docker build -t $NOTIFICATION_SERVICE:$COMMIT ./notification-service
-- docker tag $NOTIFICATION_SERVICE:$COMMIT $NOTIFICATION_SERVICE:$TAG
-- docker push $NOTIFICATION_SERVICE
-
-  # MONITORING
-- export MONITORING=gcr.io/voltaic-azimuth-192414/monitoring
-- docker build -t $MONITORING:$COMMIT ./monitoring
-- docker tag $MONITORING:$COMMIT $MONITORING:$TAG
-- docker push $MONITORING
-
-  # PRODUCT SERVICE
-- export PRODUCT_SERVICE=gcr.io/voltaic-azimuth-192414/product-service
-- docker build -t $PRODUCT_SERVICE:$COMMIT ./product-service
-- docker tag $PRODUCT_SERVICE:$COMMIT $PRODUCT_SERVICE:$TAG
-- docker push $PRODUCT_SERVICE
 
 - gcloud config set project voltaic-azimuth-192414
 - gcloud config set compute/zone us-central1-a
 - gcloud auth activate-service-account --key-file sprhegde-d8b0d97ec19d.json
 - gcloud compute scp /home/travis/build/sprhegde/OrderMgmtRepo/docker-compose.yml sprhegde@instance-1:~/order-mgmt/docker-compose_new.yml --zone us-central1-a
-- gcloud compute ssh --zone us-central1-a sprhegde@instance-1 --command "cd order-mgmt
-  docker login -u _json_key -p "$(cat sprhegde-d8b0d97ec19d.json)"  https://gcr.io
-  source ~/.bashrc
-  docker-compose down
-  mv docker-compose.yml docker-compose_old.yml
-  mv docker-compose_new.yml docker-compose.yml
-  docker-compose up -d rabbitmq
-  docker-compose up -d config
-  docker-compose up -d registry
+- gcloud compute ssh --zone us-central1-a sprhegde@instance-1 --command "cd order-mgmt 
+
+  docker login -u _json_key -p "$(cat sprhegde-d8b0d97ec19d.json)"  https://gcr.io 
+  
+  source ~/.bashrc 
+  
+  docker-compose down 
+  
+  mv docker-compose.yml docker-compose_old.yml 
+  
+  mv docker-compose_new.yml docker-compose.yml 
+  
+  docker-compose up -d rabbitmq 
+  
+  docker-compose up -d config 
+  
+  docker-compose up -d registry 
+  
   docker-compose up -d"
 
 
