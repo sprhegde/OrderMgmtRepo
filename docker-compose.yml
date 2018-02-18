@@ -1,0 +1,96 @@
+version: '2.1'
+services:
+  rabbitmq:
+      image: rabbitmq:3-management
+      restart: always
+      ports:
+        - 15672:15672
+
+  config:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    image: gcr.io/voltaic-azimuth-192414/config:v1.9
+    volumes:
+      - /home/sprhegde/order-mgmt/config:/home/sprhegde/order-mgmt/config
+    restart: always
+
+  registry:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    image: gcr.io/voltaic-azimuth-192414/registry:v1.9
+    restart: always
+    ports:
+      - 8761:8761
+
+  gateway:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    image: gcr.io/voltaic-azimuth-192414/gateway:v1.9
+    restart: always
+    ports:
+      - 80:4000
+      
+  auth-service:    
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
+      CUSTOMER_SERVICE_PASSWORD: $CUSTOMER_SERVICE_PASSWORD
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+    image: gcr.io/voltaic-azimuth-192414/auth-service:v1.9
+    restart: always
+
+  auth-mongodb:
+    environment:
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+    image: gcr.io/voltaic-azimuth-192414/mongodb
+    volumes:
+      - /home/sprhegde/order-mgmt/auth-db:/data/db
+    restart: always
+
+  customer-service:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+      NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
+    image: gcr.io/voltaic-azimuth-192414/customer-service:v1.9
+    restart: always
+
+  customer-mongodb:
+    environment:
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+    image: gcr.io/voltaic-azimuth-192414/mongodb  
+    volumes:
+      - /home/sprhegde/order-mgmt/customer-db:/data/db
+    restart: always
+    
+  product-service:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+      NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
+    image: gcr.io/voltaic-azimuth-192414/product-service:v1.9
+    restart: always
+
+  product-mongodb:
+    environment:
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+    image: gcr.io/voltaic-azimuth-192414/mongodb  
+    volumes:
+      - /home/sprhegde/order-mgmt/product-db:/data/db
+    restart: always  
+
+  notification-service:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+      MONGODB_PASSWORD: $MONGODB_PASSWORD
+      NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
+    image: gcr.io/voltaic-azimuth-192414/notification-service:v1.9  
+    restart: always
+
+  monitoring:
+    environment:
+      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
+    image: gcr.io/voltaic-azimuth-192414/monitoring:v1.9  
+    restart: always
+    ports:
+      - 9000:8080

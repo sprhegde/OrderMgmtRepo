@@ -1,6 +1,8 @@
 language: java
 jdk: oraclejdk8
 before_install:
+- openssl aes-256-cbc -K $encrypted_eedcd202a36a_key -iv $encrypted_eedcd202a36a_iv -in test-f904dbc21a30.json.enc -out test-f904dbc21a30.json -d
+- openssl aes-256-cbc -K $encrypted_957fbac0400e_key -iv $encrypted_957fbac0400e_iv -in sprhegde-d8b0d97ec19d.json.enc -out sprhegde-d8b0d97ec19d.json -d
 - chmod +x mvnw
 script:
 - mvn clean install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
@@ -36,51 +38,85 @@ env:
   
 after_deploy:
 - bash <(curl -s https://codecov.io/bash)
-- docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+- if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export
+  CLOUDSDK_CORE_DISABLE_PROMPTS=1; curl https://sdk.cloud.google.com | bash; fi
+- source /home/travis/google-cloud-sdk/path.bash.inc
+- gcloud --quiet version
+- gcloud --quiet components update
+- gcloud --quiet components beta update
+- gcloud --quiet components update kubectl
+- gcloud --quiet config set project voltaic-azimuth-192414
+- gcloud --quiet config set compute/zone us-central1-a
+- docker login -u _json_key -p "$(cat test-f904dbc21a30.json)"  https://gcr.io
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
-- export CONFIG=sprhegde/config
+
+# MONGODB
+- export MONGO=gcr.io/voltaic-azimuth-192414/mongodb
+- docker build -t $MONGO:$COMMIT ./mongodb
+- docker tag $MONGO:$COMMIT $MONGO:$TAG
+- docker push $MONGO 
+
+# CONFIG
+- export CONFIG=gcr.io/voltaic-azimuth-192414/config
 - docker build -t $CONFIG:$COMMIT ./config
 - docker tag $CONFIG:$COMMIT $CONFIG:$TAG
 - docker push $CONFIG
 
 # REGISTRY
-- export REGISTRY=sprhegde/registry
+- export REGISTRY=gcr.io/voltaic-azimuth-192414/registry
 - docker build -t $REGISTRY:$COMMIT ./registry
 - docker tag $REGISTRY:$COMMIT $REGISTRY:$TAG
 - docker push $REGISTRY
 
   # GATEWAY
-- export GATEWAY=sprhegde/gateway
+- export GATEWAY=gcr.io/voltaic-azimuth-192414/gateway
 - docker build -t $GATEWAY:$COMMIT ./gateway
 - docker tag $GATEWAY:$COMMIT $GATEWAY:$TAG
 - docker push $GATEWAY
 
   # AUTH SERVICE
-- export AUTH_SERVICE=sprhegde/auth-service
+- export AUTH_SERVICE=gcr.io/voltaic-azimuth-192414/auth-service
 - docker build -t $AUTH_SERVICE:$COMMIT ./auth-service
 - docker tag $AUTH_SERVICE:$COMMIT $AUTH_SERVICE:$TAG
 - docker push $AUTH_SERVICE
 
   # CUSTOMER SERVICE
-- export CUSTOMER_SERVICE=sprhegde/customer-service
+- export CUSTOMER_SERVICE=gcr.io/voltaic-azimuth-192414/customer-service
 - docker build -t $CUSTOMER_SERVICE:$COMMIT ./customer-service
 - docker tag $CUSTOMER_SERVICE:$COMMIT $CUSTOMER_SERVICE:$TAG
 - docker push $CUSTOMER_SERVICE
 
   # NOTIFICATION_SERVICE
-- export NOTIFICATION_SERVICE=sprhegde/notification-service
+- export NOTIFICATION_SERVICE=gcr.io/voltaic-azimuth-192414/notification-service
 - docker build -t $NOTIFICATION_SERVICE:$COMMIT ./notification-service
 - docker tag $NOTIFICATION_SERVICE:$COMMIT $NOTIFICATION_SERVICE:$TAG
 - docker push $NOTIFICATION_SERVICE
 
   # MONITORING
-- export MONITORING=sprhegde/monitoring
+- export MONITORING=gcr.io/voltaic-azimuth-192414/monitoring
 - docker build -t $MONITORING:$COMMIT ./monitoring
 - docker tag $MONITORING:$COMMIT $MONITORING:$TAG
 - docker push $MONITORING
 
   # PRODUCT SERVICE
-- export PRODUCT_SERVICE=sprhegde/product-service
+- export PRODUCT_SERVICE=gcr.io/voltaic-azimuth-192414/product-service
 - docker build -t $PRODUCT_SERVICE:$COMMIT ./product-service
 - docker tag $PRODUCT_SERVICE:$COMMIT $PRODUCT_SERVICE:$TAG
 - docker push $PRODUCT_SERVICE
+
+- gcloud config set project voltaic-azimuth-192414
+- gcloud config set compute/zone us-central1-a
+- gcloud auth activate-service-account --key-file sprhegde-d8b0d97ec19d.json
+- gcloud compute scp /home/travis/build/sprhegde/OrderMgmtRepo/docker-compose.yml sprhegde@instance-1:~/order-mgmt/docker-compose_new.yml --zone us-central1-a
+- gcloud compute ssh --zone us-central1-a sprhegde@instance-1 --command "cd order-mgmt
+  docker-compose down
+  mv docker-compose.yml docker-compose_old.yml
+  mv docker-compose_new.yml docker-compose.yml
+  docker login -u _json_key -p "$(cat test-f904dbc21a30.json)"  https://gcr.io
+  docker-compose up -d rabbitmq
+  docker-compose up -d config
+  docker-compose up -d registry
+  docker-compose up -d"
+
+
+
