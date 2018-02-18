@@ -59,21 +59,15 @@ after_deploy:
 
   cat ~/.bashrc
   
-  docker images  
+  docker images
+
+  docker run \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v "$PWD:/rootfs/$PWD" \
+    -w="/rootfs/$PWD" \
+    docker/compose:1.13.0 down 
+ 
   
-  docker-compose down 
-  
-  mv docker-compose.yml docker-compose_old.yml 
-  
-  mv docker-compose_new.yml docker-compose.yml 
-  
-  docker-compose up -d rabbitmq 
-  
-  docker-compose up -d config 
-  
-  docker-compose up -d registry 
-  
-  docker-compose up -d"
 
 
 
