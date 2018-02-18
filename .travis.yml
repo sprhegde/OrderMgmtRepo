@@ -109,10 +109,11 @@ after_deploy:
 - gcloud auth activate-service-account --key-file sprhegde-d8b0d97ec19d.json
 - gcloud compute scp /home/travis/build/sprhegde/OrderMgmtRepo/docker-compose.yml sprhegde@instance-1:~/order-mgmt/docker-compose_new.yml --zone us-central1-a
 - gcloud compute ssh --zone us-central1-a sprhegde@instance-1 --command "cd order-mgmt
+  docker login -u _json_key -p "$(cat test-f904dbc21a30.json)"  https://gcr.io
+  source ~/.bashrc
   docker-compose down
   mv docker-compose.yml docker-compose_old.yml
   mv docker-compose_new.yml docker-compose.yml
-  docker login -u _json_key -p "$(cat test-f904dbc21a30.json)"  https://gcr.io
   docker-compose up -d rabbitmq
   docker-compose up -d config
   docker-compose up -d registry
