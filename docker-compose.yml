@@ -9,7 +9,7 @@ services:
   config:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: gcr.io/voltaic-azimuth-192414/config:v1.9
+    image: gcr.io/voltaic-azimuth-192414/config:v2.0
     volumes:
       - /home/sprhegde/order-mgmt/config:/home/sprhegde/order-mgmt/config
     restart: always
@@ -17,7 +17,7 @@ services:
   registry:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: gcr.io/voltaic-azimuth-192414/registry:v1.9
+    image: gcr.io/voltaic-azimuth-192414/registry:v2.0
     restart: always
     ports:
       - 8761:8761
@@ -25,7 +25,7 @@ services:
   gateway:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: gcr.io/voltaic-azimuth-192414/gateway:v1.9
+    image: gcr.io/voltaic-azimuth-192414/gateway:v2.0
     restart: always
     ports:
       - 80:4000
@@ -36,7 +36,7 @@ services:
       NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
       CUSTOMER_SERVICE_PASSWORD: $CUSTOMER_SERVICE_PASSWORD
       MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: gcr.io/voltaic-azimuth-192414/auth-service:v1.9
+    image: gcr.io/voltaic-azimuth-192414/auth-service:v2.0
     restart: always
 
   auth-mongodb:
@@ -52,7 +52,7 @@ services:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
       MONGODB_PASSWORD: $MONGODB_PASSWORD
       NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
-    image: gcr.io/voltaic-azimuth-192414/customer-service:v1.9
+    image: gcr.io/voltaic-azimuth-192414/customer-service:v2.0
     restart: always
 
   customer-mongodb:
@@ -68,7 +68,7 @@ services:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
       MONGODB_PASSWORD: $MONGODB_PASSWORD
       NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
-    image: gcr.io/voltaic-azimuth-192414/product-service:v1.9
+    image: gcr.io/voltaic-azimuth-192414/product-service:v2.0
     restart: always
 
   product-mongodb:
@@ -84,13 +84,13 @@ services:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
       MONGODB_PASSWORD: $MONGODB_PASSWORD
       NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
-    image: gcr.io/voltaic-azimuth-192414/notification-service:v1.9  
+    image: gcr.io/voltaic-azimuth-192414/notification-service:v2.0  
     restart: always
 
   monitoring:
     environment:
       CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: gcr.io/voltaic-azimuth-192414/monitoring:v1.9  
+    image: gcr.io/voltaic-azimuth-192414/monitoring:v2.0  
     restart: always
     ports:
       - 9000:8080
