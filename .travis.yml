@@ -55,9 +55,9 @@ after_deploy:
 
   docker login -u _json_key -p '$(cat sprhegde-d8b0d97ec19d.json)'  https://gcr.io 
   
-  whoami
-  
-  source ~/.bashrc 
+  source ~/.bashrc
+
+  cat ~/.bashrc
   
   docker-compose down 
   
