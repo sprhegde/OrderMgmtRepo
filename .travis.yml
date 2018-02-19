@@ -15,9 +15,6 @@ before_install:
   pwd
   
   alias compose='source ~/.bashrc'
-  
-  compose
-  
    
   docker-compose up
   " 
