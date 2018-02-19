@@ -12,7 +12,7 @@ before_install:
 
   cd order-mgmt
   
-  docker run -v /var/run/docker.sock:/var/run/docker.sock -v $PWD:/rootfs/$PWD -w=/rootfs/$PWD docker/compose:1.13.0 up
+  docker run -v /var/run/docker.sock:/var/run/docker.sock -v /home/sprhegde/order-mgmt:/rootfs/home/sprhegde/order-mgmt -w=/rootfs/home/sprhegde/order-mgmt docker/compose:1.13.0 up
   
   "
   
