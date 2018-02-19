@@ -9,12 +9,8 @@ before_install:
 - gcloud compute ssh --zone us-central1-a sprhegde@instance-1 --command "cd order-mgmt 
 
   docker login -u _json_key -p '$(cat sprhegde-d8b0d97ec19d.json)'  https://gcr.io 
-
-  docker images
   
   pwd
-  
-  alias compose='source ~/.bashrc'
    
   docker-compose up
   " 
