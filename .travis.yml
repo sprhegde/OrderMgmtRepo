@@ -7,11 +7,11 @@ before_install:
 - gcloud auth activate-service-account --key-file sprhegde-d8b0d97ec19d.json
 - gcloud compute scp /home/travis/build/sprhegde/OrderMgmtRepo/docker-compose.yml sprhegde@instance-1:~/order-mgmt/docker-compose_new.yml --zone us-central1-a
 - gcloud compute ssh --zone us-central1-a sprhegde@instance-1 --command "
-  
-  cd order-mgmt
-  
+    
   docker login -u _json_key -p '$(cat sprhegde-d8b0d97ec19d.json)'  https://gcr.io 
 
+  cd order-mgmt
+  
   docker run \
   
     -v /var/run/docker.sock:/var/run/docker.sock \
