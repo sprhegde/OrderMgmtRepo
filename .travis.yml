@@ -11,9 +11,6 @@ before_install:
   cd order-mgmt
   
   docker login -u _json_key -p '$(cat sprhegde-d8b0d97ec19d.json)'  https://gcr.io 
-  
-  ls -lrt
-  
 
   docker run \
   
@@ -23,7 +20,7 @@ before_install:
         
             -w='/rootfs/$PWD' \
             
-                docker/compose:1.13.0 up
+                docker/compose:1.13.0 -f docker-compose.yml up
   
   "
   
