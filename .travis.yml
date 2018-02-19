@@ -14,8 +14,9 @@ before_install:
   
   pwd
   
+  exec bash
   
-  docker run 8bf87a45bd26 up
+  docker-compose up
   " 
  
   
