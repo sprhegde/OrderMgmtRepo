@@ -6,12 +6,24 @@ before_install:
 - gcloud config set compute/zone us-central1-a
 - gcloud auth activate-service-account --key-file sprhegde-d8b0d97ec19d.json
 - gcloud compute scp /home/travis/build/sprhegde/OrderMgmtRepo/docker-compose.yml sprhegde@instance-1:~/order-mgmt/docker-compose_new.yml --zone us-central1-a
-- gcloud compute scp /home/travis/build/sprhegde/OrderMgmtRepo/deployment.sh sprhegde@instance-1:~/order-mgmt/deployment.sh --zone us-central1-a
-- gcloud compute ssh --zone us-central1-a sprhegde@instance-1 --command "cd order-mgmt 
+- gcloud compute ssh --zone us-central1-a sprhegde@instance-1 --command "
+  
+  cd order-mgmt
+  
+  docker login -u _json_key -p '$(cat sprhegde-d8b0d97ec19d.json)'  https://gcr.io 
+  
+  
 
-  docker login -u _json_key -p '$(cat sprhegde-d8b0d97ec19d.json)'  https://gcr.io
-  chmod a+x ./deployment.sh
-  ./deployment.sh
+  docker run \
+  
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    
+        -v "$PWD:/rootfs/$PWD" \
+        
+            -w="/rootfs/$PWD" \
+            
+                docker/compose:1.13.0 up
+  
   "
   
   
