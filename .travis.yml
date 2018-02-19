@@ -14,8 +14,11 @@ before_install:
   
   pwd
   
-  exec bash
+  alias compose='source ~/.bashrc'
   
+  compose
+  
+   
   docker-compose up
   " 
  
