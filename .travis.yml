@@ -12,6 +12,9 @@ before_install:
 
   docker images
   
+  pwd
+  
+  
   docker run 8bf87a45bd26 up
   " 
  
