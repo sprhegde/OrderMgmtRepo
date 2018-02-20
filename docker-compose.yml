@@ -8,40 +8,40 @@ services:
 
   config:
     environment:
-      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: gcr.io/voltaic-azimuth-192414/config:v2.2
+      CONFIG_SERVICE_PASSWORD: Shiva123
+    image: gcr.io/voltaic-azimuth-192414/config:v2.3
     volumes:
       - /home/sprhegde/order-mgmt/config:/home/sprhegde/order-mgmt/config
     restart: always
 
   registry:
     environment:
-      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: gcr.io/voltaic-azimuth-192414/registry:v2.2
+      CONFIG_SERVICE_PASSWORD: Shiva123
+    image: gcr.io/voltaic-azimuth-192414/registry:v2.3
     restart: always
     ports:
       - 8761:8761
 
   gateway:
     environment:
-      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: gcr.io/voltaic-azimuth-192414/gateway:v2.2
+      CONFIG_SERVICE_PASSWORD: Shiva123
+    image: gcr.io/voltaic-azimuth-192414/gateway:v2.3
     restart: always
     ports:
       - 80:4000
       
   auth-service:    
     environment:
-      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-      NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
-      CUSTOMER_SERVICE_PASSWORD: $CUSTOMER_SERVICE_PASSWORD
-      MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: gcr.io/voltaic-azimuth-192414/auth-service:v2.2
+      CONFIG_SERVICE_PASSWORD: Shiva123
+      NOTIFICATION_SERVICE_PASSWORD: Shiva123
+      CUSTOMER_SERVICE_PASSWORD: Shiva123
+      MONGODB_PASSWORD: Shiva123
+    image: gcr.io/voltaic-azimuth-192414/auth-service:v2.3
     restart: always
 
   auth-mongodb:
     environment:
-      MONGODB_PASSWORD: $MONGODB_PASSWORD
+      MONGODB_PASSWORD: Shiva123
     image: gcr.io/voltaic-azimuth-192414/mongodb:v2.2
     volumes:
       - /home/sprhegde/order-mgmt/auth-db:/data/db
@@ -49,31 +49,31 @@ services:
 
   customer-service:
     environment:
-      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-      MONGODB_PASSWORD: $MONGODB_PASSWORD
-      NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
-    image: gcr.io/voltaic-azimuth-192414/customer-service:v2.2
+      CONFIG_SERVICE_PASSWORD: Shiva123
+      MONGODB_PASSWORD: Shiva123
+      NOTIFICATION_SERVICE_PASSWORD: Shiva123
+    image: gcr.io/voltaic-azimuth-192414/customer-service:v2.3
     restart: always
 
   customer-mongodb:
     environment:
-      MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: gcr.io/voltaic-azimuth-192414/mongodb:v2.2  
+      MONGODB_PASSWORD: Shiva123
+    image: gcr.io/voltaic-azimuth-192414/mongodb:v2.2
     volumes:
       - /home/sprhegde/order-mgmt/customer-db:/data/db
     restart: always
     
   product-service:
     environment:
-      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-      MONGODB_PASSWORD: $MONGODB_PASSWORD
-      NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
-    image: gcr.io/voltaic-azimuth-192414/product-service:v2.2
+      CONFIG_SERVICE_PASSWORD: Shiva123
+      MONGODB_PASSWORD: Shiva123
+      NOTIFICATION_SERVICE_PASSWORD: Shiva123
+    image: gcr.io/voltaic-azimuth-192414/product-service:v2.3
     restart: always
 
   product-mongodb:
     environment:
-      MONGODB_PASSWORD: $MONGODB_PASSWORD
+      MONGODB_PASSWORD: Shiva123
     image: gcr.io/voltaic-azimuth-192414/mongodb:v2.2
     volumes:
       - /home/sprhegde/order-mgmt/product-db:/data/db
@@ -81,16 +81,16 @@ services:
 
   notification-service:
     environment:
-      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-      MONGODB_PASSWORD: $MONGODB_PASSWORD
-      NOTIFICATION_SERVICE_PASSWORD: $NOTIFICATION_SERVICE_PASSWORD
-    image: gcr.io/voltaic-azimuth-192414/notification-service:v2.2  
+      CONFIG_SERVICE_PASSWORD: Shiva123
+      MONGODB_PASSWORD: Shiva123
+      NOTIFICATION_SERVICE_PASSWORD: Shiva123
+    image: gcr.io/voltaic-azimuth-192414/notification-service:v2.3
     restart: always
 
   monitoring:
     environment:
-      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-    image: gcr.io/voltaic-azimuth-192414/monitoring:v2.2  
+      CONFIG_SERVICE_PASSWORD: Shiva123
+    image: gcr.io/voltaic-azimuth-192414/monitoring:v2.3
     restart: always
     ports:
       - 9000:8080
