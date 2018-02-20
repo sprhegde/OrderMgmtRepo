@@ -49,59 +49,6 @@ after_deploy:
 - docker login -u _json_key -p "$(cat sprhegde-d8b0d97ec19d.json)"  https://gcr.io
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
 
-# MONGODB -only one time
-#- export MONGO=gcr.io/voltaic-azimuth-192414/mongodb
-#- docker build -t $MONGO:$COMMIT ./mongodb
-#- docker tag $MONGO:$COMMIT $MONGO:$TAG
-#- docker push $MONGO 
-
-# CONFIG
-- export CONFIG=gcr.io/voltaic-azimuth-192414/config
-- docker build -t $CONFIG:$COMMIT ./config
-- docker tag $CONFIG:$COMMIT $CONFIG:$TAG
-- docker push $CONFIG
-
-# REGISTRY
-- export REGISTRY=gcr.io/voltaic-azimuth-192414/registry
-- docker build -t $REGISTRY:$COMMIT ./registry
-- docker tag $REGISTRY:$COMMIT $REGISTRY:$TAG
-- docker push $REGISTRY
-
-  # GATEWAY
-- export GATEWAY=gcr.io/voltaic-azimuth-192414/gateway
-- docker build -t $GATEWAY:$COMMIT ./gateway
-- docker tag $GATEWAY:$COMMIT $GATEWAY:$TAG
-- docker push $GATEWAY
-
-  # AUTH SERVICE
-- export AUTH_SERVICE=gcr.io/voltaic-azimuth-192414/auth-service
-- docker build -t $AUTH_SERVICE:$COMMIT ./auth-service
-- docker tag $AUTH_SERVICE:$COMMIT $AUTH_SERVICE:$TAG
-- docker push $AUTH_SERVICE
-
-  # CUSTOMER SERVICE
-- export CUSTOMER_SERVICE=gcr.io/voltaic-azimuth-192414/customer-service
-- docker build -t $CUSTOMER_SERVICE:$COMMIT ./customer-service
-- docker tag $CUSTOMER_SERVICE:$COMMIT $CUSTOMER_SERVICE:$TAG
-- docker push $CUSTOMER_SERVICE
-
-  # NOTIFICATION_SERVICE
-- export NOTIFICATION_SERVICE=gcr.io/voltaic-azimuth-192414/notification-service
-- docker build -t $NOTIFICATION_SERVICE:$COMMIT ./notification-service
-- docker tag $NOTIFICATION_SERVICE:$COMMIT $NOTIFICATION_SERVICE:$TAG
-- docker push $NOTIFICATION_SERVICE
-
-  # MONITORING
-- export MONITORING=gcr.io/voltaic-azimuth-192414/monitoring
-- docker build -t $MONITORING:$COMMIT ./monitoring
-- docker tag $MONITORING:$COMMIT $MONITORING:$TAG
-- docker push $MONITORING
-
-  # PRODUCT SERVICE
-- export PRODUCT_SERVICE=gcr.io/voltaic-azimuth-192414/product-service
-- docker build -t $PRODUCT_SERVICE:$COMMIT ./product-service
-- docker tag $PRODUCT_SERVICE:$COMMIT $PRODUCT_SERVICE:$TAG
-- docker push $PRODUCT_SERVICE
 
 - gcloud config set project voltaic-azimuth-192414
 - gcloud config set compute/zone us-central1-a
@@ -118,21 +65,30 @@ after_deploy:
   mv docker-compose.yml docker-compose_old.yml 
   
   mv docker-compose_new.yml docker-compose.yml
+  
 
   docker pull gcr.io/voltaic-azimuth-192414/config:v2.3
+  
   docker pull gcr.io/voltaic-azimuth-192414/registry:v2.3
+  
   docker pull gcr.io/voltaic-azimuth-192414/gateway:v2.3
+  
   docker pull gcr.io/voltaic-azimuth-192414/auth-service:v2.3
+  
   docker pull gcr.io/voltaic-azimuth-192414/customer-service:v2.3
+  
   docker pull gcr.io/voltaic-azimuth-192414/notification-service:v2.3
+  
   docker pull gcr.io/voltaic-azimuth-192414/monitoring:v2.3
-  docker pull gcr.io/voltaic-azimuth-192414/product-service:v2.3  
+  
+  docker pull gcr.io/voltaic-azimuth-192414/product-service:v2.3
+  
   
   docker run -v /var/run/docker.sock:/var/run/docker.sock -v /home/sprhegde/order-mgmt:/rootfs/home/sprhegde/order-mgmt -w=/rootfs/home/sprhegde/order-mgmt docker/compose:1.13.0 up -d rabbitmq 
   
   docker run -v /var/run/docker.sock:/var/run/docker.sock -v /home/sprhegde/order-mgmt:/rootfs/home/sprhegde/order-mgmt -w=/rootfs/home/sprhegde/order-mgmt docker/compose:1.13.0 up -d config 
   
-  ddocker run -v /var/run/docker.sock:/var/run/docker.sock -v /home/sprhegde/order-mgmt:/rootfs/home/sprhegde/order-mgmt -w=/rootfs/home/sprhegde/order-mgmt docker/compose:1.13.0 up -d registry 
+  docker run -v /var/run/docker.sock:/var/run/docker.sock -v /home/sprhegde/order-mgmt:/rootfs/home/sprhegde/order-mgmt -w=/rootfs/home/sprhegde/order-mgmt docker/compose:1.13.0 up -d registry 
   
   docker run -v /var/run/docker.sock:/var/run/docker.sock -v /home/sprhegde/order-mgmt:/rootfs/home/sprhegde/order-mgmt -w=/rootfs/home/sprhegde/order-mgmt docker/compose:1.13.0 up -d
   "
