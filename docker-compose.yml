@@ -9,7 +9,7 @@ services:
   config:
     environment:
       CONFIG_SERVICE_PASSWORD: Shiva123
-    image: gcr.io/voltaic-azimuth-192414/config:v2.3
+    image: gcr.io/voltaic-azimuth-192414/config:v2.4
     volumes:
       - /home/sprhegde/order-mgmt/config:/home/sprhegde/order-mgmt/config
     restart: always
@@ -17,7 +17,7 @@ services:
   registry:
     environment:
       CONFIG_SERVICE_PASSWORD: Shiva123
-    image: gcr.io/voltaic-azimuth-192414/registry:v2.3
+    image: gcr.io/voltaic-azimuth-192414/registry:v2.4
     restart: always
     ports:
       - 8761:8761
@@ -25,7 +25,7 @@ services:
   gateway:
     environment:
       CONFIG_SERVICE_PASSWORD: Shiva123
-    image: gcr.io/voltaic-azimuth-192414/gateway:v2.3
+    image: gcr.io/voltaic-azimuth-192414/gateway:v2.4
     restart: always
     ports:
       - 80:4000
@@ -36,13 +36,13 @@ services:
       NOTIFICATION_SERVICE_PASSWORD: Shiva123
       CUSTOMER_SERVICE_PASSWORD: Shiva123
       MONGODB_PASSWORD: Shiva123
-    image: gcr.io/voltaic-azimuth-192414/auth-service:v2.3
+    image: gcr.io/voltaic-azimuth-192414/auth-service:v2.4
     restart: always
 
   auth-mongodb:
     environment:
       MONGODB_PASSWORD: Shiva123
-    image: gcr.io/voltaic-azimuth-192414/mongodb:v2.2
+    image: sprhegde/mongodb
     volumes:
       - /home/sprhegde/order-mgmt/auth-db:/data/db
     restart: always
@@ -52,13 +52,13 @@ services:
       CONFIG_SERVICE_PASSWORD: Shiva123
       MONGODB_PASSWORD: Shiva123
       NOTIFICATION_SERVICE_PASSWORD: Shiva123
-    image: gcr.io/voltaic-azimuth-192414/customer-service:v2.3
+    image: gcr.io/voltaic-azimuth-192414/customer-service:v2.4
     restart: always
 
   customer-mongodb:
     environment:
       MONGODB_PASSWORD: Shiva123
-    image: gcr.io/voltaic-azimuth-192414/mongodb:v2.2
+    image: sprhegde/mongodb
     volumes:
       - /home/sprhegde/order-mgmt/customer-db:/data/db
     restart: always
@@ -68,13 +68,13 @@ services:
       CONFIG_SERVICE_PASSWORD: Shiva123
       MONGODB_PASSWORD: Shiva123
       NOTIFICATION_SERVICE_PASSWORD: Shiva123
-    image: gcr.io/voltaic-azimuth-192414/product-service:v2.3
+    image: gcr.io/voltaic-azimuth-192414/product-service:v2.4
     restart: always
 
   product-mongodb:
     environment:
       MONGODB_PASSWORD: Shiva123
-    image: gcr.io/voltaic-azimuth-192414/mongodb:v2.2
+    image: sprhegde/mongodb
     volumes:
       - /home/sprhegde/order-mgmt/product-db:/data/db
     restart: always  
@@ -84,13 +84,13 @@ services:
       CONFIG_SERVICE_PASSWORD: Shiva123
       MONGODB_PASSWORD: Shiva123
       NOTIFICATION_SERVICE_PASSWORD: Shiva123
-    image: gcr.io/voltaic-azimuth-192414/notification-service:v2.3
+    image: gcr.io/voltaic-azimuth-192414/notification-service:v2.4
     restart: always
 
   monitoring:
     environment:
       CONFIG_SERVICE_PASSWORD: Shiva123
-    image: gcr.io/voltaic-azimuth-192414/monitoring:v2.3
+    image: gcr.io/voltaic-azimuth-192414/monitoring:v2.4
     restart: always
     ports:
       - 9000:8080
