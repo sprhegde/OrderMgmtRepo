@@ -6,7 +6,6 @@ import com.ordermgmt.customer.domain.Address;
 import com.ordermgmt.customer.domain.Customer;
 import com.ordermgmt.customer.domain.User;
 import com.ordermgmt.customer.repository.CustomerRepository;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

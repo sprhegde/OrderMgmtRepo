@@ -6,8 +6,6 @@ public class Address {
 	private String address1;
 	private String address2;
 	private String telNo;
-	
-	private String faxNo;
 
 	public Address() {
 	}
@@ -42,14 +40,6 @@ public class Address {
 
 	public void setTelNo(String telNo) {
 		this.telNo = telNo;
-	}
-	
-	public String getFaxNo() {
-		return faxNo;
-	}
-
-	public void setFaxNo(String faxNo) {
-		this.faxNo = faxNo;
 	}
 
 }

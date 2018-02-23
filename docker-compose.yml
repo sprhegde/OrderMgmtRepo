@@ -9,7 +9,7 @@ services:
   config:
     environment:
       CONFIG_SERVICE_PASSWORD: Shiva123
-    image: gcr.io/voltaic-azimuth-192414/config:v2.5
+    image: gcr.io/voltaic-azimuth-192414/config:v2.6
     volumes:
       - /home/sprhegde/order-mgmt/config:/home/sprhegde/order-mgmt/config
     restart: always
@@ -17,7 +17,7 @@ services:
   registry:
     environment:
       CONFIG_SERVICE_PASSWORD: Shiva123
-    image: gcr.io/voltaic-azimuth-192414/registry:v2.5
+    image: gcr.io/voltaic-azimuth-192414/registry:v2.6
     restart: always
     ports:
       - 8761:8761
@@ -25,7 +25,7 @@ services:
   gateway:
     environment:
       CONFIG_SERVICE_PASSWORD: Shiva123
-    image: gcr.io/voltaic-azimuth-192414/gateway:v2.5
+    image: gcr.io/voltaic-azimuth-192414/gateway:v2.6
     restart: always
     ports:
       - 80:4000
@@ -36,7 +36,7 @@ services:
       NOTIFICATION_SERVICE_PASSWORD: Shiva123
       CUSTOMER_SERVICE_PASSWORD: Shiva123
       MONGODB_PASSWORD: Shiva123
-    image: gcr.io/voltaic-azimuth-192414/auth-service:v2.5
+    image: gcr.io/voltaic-azimuth-192414/auth-service:v2.6
     restart: always
 
   auth-mongodb:
@@ -52,7 +52,7 @@ services:
       CONFIG_SERVICE_PASSWORD: Shiva123
       MONGODB_PASSWORD: Shiva123
       NOTIFICATION_SERVICE_PASSWORD: Shiva123
-    image: gcr.io/voltaic-azimuth-192414/customer-service:v2.5
+    image: gcr.io/voltaic-azimuth-192414/customer-service:v2.6
     restart: always
 
   customer-mongodb:
@@ -68,7 +68,7 @@ services:
       CONFIG_SERVICE_PASSWORD: Shiva123
       MONGODB_PASSWORD: Shiva123
       NOTIFICATION_SERVICE_PASSWORD: Shiva123
-    image: gcr.io/voltaic-azimuth-192414/product-service:v2.5
+    image: gcr.io/voltaic-azimuth-192414/product-service:v2.6
     restart: always
 
   product-mongodb:
@@ -84,13 +84,13 @@ services:
       CONFIG_SERVICE_PASSWORD: Shiva123
       MONGODB_PASSWORD: Shiva123
       NOTIFICATION_SERVICE_PASSWORD: Shiva123
-    image: gcr.io/voltaic-azimuth-192414/notification-service:v2.5
+    image: gcr.io/voltaic-azimuth-192414/notification-service:v2.6
     restart: always
 
   monitoring:
     environment:
       CONFIG_SERVICE_PASSWORD: Shiva123
-    image: gcr.io/voltaic-azimuth-192414/monitoring:v2.5
+    image: gcr.io/voltaic-azimuth-192414/monitoring:v2.6
     restart: always
     ports:
       - 9000:8080

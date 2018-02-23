@@ -123,21 +123,21 @@ after_deploy:
   mv docker-compose_new.yml docker-compose.yml
   
 
-  docker pull gcr.io/voltaic-azimuth-192414/config:v2.5
+  docker pull gcr.io/voltaic-azimuth-192414/config:v2.6
   
-  docker pull gcr.io/voltaic-azimuth-192414/registry:v2.5
+  docker pull gcr.io/voltaic-azimuth-192414/registry:v2.6
   
-  docker pull gcr.io/voltaic-azimuth-192414/gateway:v2.5
+  docker pull gcr.io/voltaic-azimuth-192414/gateway:v2.6
   
-  docker pull gcr.io/voltaic-azimuth-192414/auth-service:v2.5
+  docker pull gcr.io/voltaic-azimuth-192414/auth-service:v2.6
   
-  docker pull gcr.io/voltaic-azimuth-192414/customer-service:v2.5
+  docker pull gcr.io/voltaic-azimuth-192414/customer-service:v2.6
   
-  docker pull gcr.io/voltaic-azimuth-192414/notification-service:v2.5
+  docker pull gcr.io/voltaic-azimuth-192414/notification-service:v2.6
   
-  docker pull gcr.io/voltaic-azimuth-192414/monitoring:v2.5
+  docker pull gcr.io/voltaic-azimuth-192414/monitoring:v2.6
   
-  docker pull gcr.io/voltaic-azimuth-192414/product-service:v2.5
+  docker pull gcr.io/voltaic-azimuth-192414/product-service:v2.6
   
   sleep 5
   

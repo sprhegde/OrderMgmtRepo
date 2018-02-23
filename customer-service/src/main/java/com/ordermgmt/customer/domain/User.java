@@ -1,7 +1,6 @@
 package com.ordermgmt.customer.domain;
 
 import org.hibernate.validator.constraints.Length;
-
 import javax.validation.constraints.NotNull;
 
 public class User {
