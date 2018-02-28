@@ -6,6 +6,7 @@ import com.ordermgmt.customer.domain.Address;
 import com.ordermgmt.customer.domain.Customer;
 import com.ordermgmt.customer.domain.User;
 import com.ordermgmt.customer.repository.CustomerRepository;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,26 +50,19 @@ public class CustomerServiceImpl implements CustomerService {
 
 		authClient.createUser(user);
 
-		/*Saving saving = new Saving();
-		saving.setAmount(new BigDecimal(0));
-		saving.setCurrency(Currency.getDefault());
-		saving.setInterest(new BigDecimal(0));
-		saving.setDeposit(false);
-		saving.setCapitalization(false);*/
 		
 		Address address = new Address();
 		address.setHouseNo(user.getHouseNo());
 		address.setAddress1(user.getAddress1());
 		address.setAddress2(user.getAddress2());
 		address.setTelNo(user.getTelNo());
+		address.setFaxNo(user.getFaxNo());
 
 		Customer customer = new Customer();
-		//customer.setId(user.getUsername());
 		customer.setCustomerId(user.getUsername());
 		customer.setLastSeen(new Date());
 		customer.setCustomerName(user.getCustomerName());
 		customer.setEmail(user.getEmail());
-		//customer.setSaving(saving);
 		customer.setAddress(address);
 
 		repository.save(customer);

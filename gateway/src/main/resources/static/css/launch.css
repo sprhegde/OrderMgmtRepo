@@ -11,7 +11,7 @@ only screen and (min-resolution: 144dpi) {
 	}
 }
 
-/*========================== CARDS WRAPPER ================================*/
+/*========================== CARDS WRAPPER ===========================*/
 
 #loginpage {
 	top:0; bottom: 0; left:0; right: 0;
@@ -82,7 +82,7 @@ only screen and (min-resolution: 144dpi) {
 	position: absolute;
 	text-transform: uppercase;
 	left: 0px; right: 0px; bottom: -10px;
-	height: 30px;
+	height: 20px;
 	font-size: 11px;
 	color: #6e6e6e;
 	line-height: 0.95em;
@@ -91,7 +91,7 @@ only screen and (min-resolution: 144dpi) {
 	background-color: white;
 }
 .fliptop {
-	top: 585px;
+	top: 610px;
 }
 .fliptext a{
 	color: #96bcce;
@@ -329,7 +329,7 @@ input[class="frontforms"]:-moz-placeholder{font-family: Arial; font-size: 15px; 
 	transform: rotateY(180deg);
 	background-color: white;
 	z-index: 1;
-	height: 500px;
+	height: 550px;
 }
 #franklin{
 	border: 1px solid #b9d6dc;
@@ -506,9 +506,9 @@ input[id="backmailform"] {
 }
 
 .regbutton {
-	height: 34px;
+	height: 25px;
 	width: 195px;
-	top:18px;
+	top:1px;
 	font-size: 11px;
 }
 .demobutton {

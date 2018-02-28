@@ -1,6 +1,7 @@
 package com.ordermgmt.customer.domain;
 
 import org.hibernate.validator.constraints.Length;
+
 import javax.validation.constraints.NotNull;
 
 public class User {
@@ -21,6 +22,8 @@ public class User {
 	private String address1;
 	private String address2;
 	private String telNo;
+	
+	private String faxNo;
 
 	public String getUsername() {
 		return username;
@@ -86,5 +89,11 @@ public class User {
 		this.telNo = telNo;
 	}
 	
-	
+	public String getFaxNo() {
+		return faxNo;
+	}
+
+	public void setFaxNo(String faxNo) {
+		this.faxNo = faxNo;
+	}
 }
