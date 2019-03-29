@@ -1,7 +1,7 @@
 FROM java:8-jre
-MAINTAINER Alexander Lukyanchikov <sqshq@sqshq.com>
+MAINTAINER Shivaprasad Hegde <sprhegde@gmail.com>
 
-ADD ./target/account-service.jar /app/
-CMD ["java", "-Xmx200m", "-jar", "/app/account-service.jar"]
+ADD https://github.com/sprhegde/OrderMgmtRepo/releases/download/v2.8/order-service-1.0-SNAPSHOT.jar /app/
+CMD ["java", "-Xmx200m", "-jar", "/app/order-service-1.0-SNAPSHOT.jar"]
 
 EXPOSE 6000

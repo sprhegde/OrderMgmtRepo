@@ -8,7 +8,7 @@ script:
 deploy:
   provider: releases
   api_key:
-    secure: sh7oRlzgKaT7CevmNDz9/nqelUwUz+MYeafXltWd1r3PSP/7rryNoscjlWvbHy2sDYpCHR1+r8Sc9R1UNFOYmI8lvbrxVyWrZ3SLWE1E/Y1m/GEUO5rlz79dFTIl9TgVajGcU7SaG7ywYVQ3YBQfpmZS4hSWjiDPuSDOk/b7Vc/ZGha8X8yp4dhtqQRDKNwH1KhKaK3yxFbNSckbfZiOmr3vov5Shm16tQKHZKZH5f1Pqp9U0Kn05OaiFuNJidWBdOomqGEX97WSMc8uBAHSukSoLLz8Dhzn5s82MPMpJv4uCUNsu2T9YZlPxSc1K5vKAeU69AGDL4mScs5iyt3avTOgxSTpPucVdRpIhQa5l4eCV9Z87jh0ECD/7+8CWyRgoipRcrswXxfeNmzRHL6zhUW8Cihjs0EspYU7wd6nV2TJ0JwiYyixCp7fN3tBegFoGBYCR+LpCQby4krvP2Quczti6rF3MqprHAAXbMR+FC22u0jhlXrrz2Rh0ZSEi4WCri3cPIBVMo6+TnDn/dBkJXl3XywfKa5Cb/4oxS21toevJeoqjrFFGdLJm3rC5xMupuIyTjzxPwxfrISzVqlFtwJgLDnCbZc107bcEohI176kuuBHW2AKS+f6BUHL+NI+y8DsT46fwEUw2PT90/ZTR9VX+SR/jBSx0/JlDNOOTtc=
+    secure: N67AA/fGgr+b//uHp/rdPVAle7VphlDA44lpi7jXSzyzo+etKOlwWsVuWWcNcycyjPOkATySt4ZQYImLuKhL76y+cjT76OyT0IjfSh+/WZmr08sV7sBaul28EIe2RQwiWAogb1rzCfJj9cv8//pBIgmuNGg/RAMNnF0rM6hieMONec3jbsYmr3s5pUKnGZlManfk9UhPTlLA0RR0FS/WyVFGcgKrt/q/q97h3tJq+fooUdyyHfhAGWHQZaRg+D0KJqc7H5grgAwZKqBDprmUoqbyu8Xbne+FAwq3eO3zupGHnPNFfRQKFz1FC0CAMO4N6WX8jm61IQVrlwK79JcKW+9P4wYJymw4VNzH0yYIURxdBH5ga4FT6l8nhyKpFiGSwoawJEN4HsldAu3AsR24A+27m6S2V7Fdg7QZTeMmZDgim8VehUN8mk5NtcA8NvtOOC1E2I3/MWlbl8qifgkaHWPiS9tUVs1qskkvsWXt5xLAW2RbJ8dXiQ9PS0cNKwmOznwf4K0lWdDrt4h55kGigMvm8XReH3tuBxQmZHcFUjqvoqTq8nQCbkisk1hBvjtE/8GQWYqdaIb3QjL+PnqCDNsX2aKwZwkR4FEkQuEpJ+s1VZFeWv4RmqudP9XwMRN5itXB37sRKKqCZrtkD1kufTGLy6YfRfrAJRqRSqTUGAk=
   file:
     - "/home/travis/.m2/repository/com/ordermgmt/config/1.0.0-SNAPSHOT/config-1.0.0-SNAPSHOT.jar"
     - "/home/travis/.m2/repository/com/ordermgmt/monitoring/0.0.1-SNAPSHOT/monitoring-0.0.1-SNAPSHOT.jar"
@@ -18,10 +18,12 @@ deploy:
     - "/home/travis/.m2/repository/com/ordermgmt/customer-service/1.0-SNAPSHOT/customer-service-1.0-SNAPSHOT.jar"
     - "/home/travis/.m2/repository/com/ordermgmt/notification-service/1.0.0-SNAPSHOT/notification-service-1.0.0-SNAPSHOT.jar"
     - "/home/travis/.m2/repository/com/ordermgmt/product-service/1.0-SNAPSHOT/product-service-1.0-SNAPSHOT.jar"
+    - "/home/travis/.m2/repository/com/ordermgmt/product-service/1.0-SNAPSHOT/order-service-1.0-SNAPSHOT.jar"
     
   on:
     repo: sprhegde/OrderMgmtRepo
     all_branches: true
+    skip_cleanup: true
     tags: true
 sudo: required
 dist: trusty
@@ -37,123 +39,54 @@ env:
   
 after_deploy:
 - bash <(curl -s https://codecov.io/bash)
-- if [ ! -d "$HOME/google-cloud-sdk/bin" ]; then rm -rf $HOME/google-cloud-sdk; export
-  CLOUDSDK_CORE_DISABLE_PROMPTS=1; curl https://sdk.cloud.google.com | bash; fi
-- source /home/travis/google-cloud-sdk/path.bash.inc
-- gcloud --quiet version
-- gcloud --quiet components update
-- gcloud --quiet components beta update
-- gcloud --quiet components update kubectl
-- gcloud --quiet config set project voltaic-azimuth-192414
-- gcloud --quiet config set compute/zone us-central1-a
-- docker login -u _json_key -p "$(cat sprhegde-d8b0d97ec19d.json)"  https://gcr.io
+- docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
 - export TAG=`if [ "$TRAVIS_BRANCH" == "master" ]; then echo "latest"; else echo $TRAVIS_BRANCH; fi`
-
-# MONGODB -only one time
-#- export MONGO=gcr.io/voltaic-azimuth-192414/mongodb
-#- docker build -t $MONGO:$COMMIT ./mongodb
-#- docker tag $MONGO:$COMMIT $MONGO:$TAG
-#- docker push $MONGO 
-
-# CONFIG
-- export CONFIG=gcr.io/voltaic-azimuth-192414/config
+- export CONFIG=sprhegde/config
 - docker build -t $CONFIG:$COMMIT ./config
 - docker tag $CONFIG:$COMMIT $CONFIG:$TAG
 - docker push $CONFIG
 
 # REGISTRY
-- export REGISTRY=gcr.io/voltaic-azimuth-192414/registry
+- export REGISTRY=sprhegde/registry
 - docker build -t $REGISTRY:$COMMIT ./registry
 - docker tag $REGISTRY:$COMMIT $REGISTRY:$TAG
 - docker push $REGISTRY
 
   # GATEWAY
-- export GATEWAY=gcr.io/voltaic-azimuth-192414/gateway
+- export GATEWAY=sprhegde/gateway
 - docker build -t $GATEWAY:$COMMIT ./gateway
 - docker tag $GATEWAY:$COMMIT $GATEWAY:$TAG
 - docker push $GATEWAY
 
   # AUTH SERVICE
-- export AUTH_SERVICE=gcr.io/voltaic-azimuth-192414/auth-service
+- export AUTH_SERVICE=sprhegde/auth-service
 - docker build -t $AUTH_SERVICE:$COMMIT ./auth-service
 - docker tag $AUTH_SERVICE:$COMMIT $AUTH_SERVICE:$TAG
 - docker push $AUTH_SERVICE
 
   # CUSTOMER SERVICE
-- export CUSTOMER_SERVICE=gcr.io/voltaic-azimuth-192414/customer-service
+- export CUSTOMER_SERVICE=sprhegde/customer-service
 - docker build -t $CUSTOMER_SERVICE:$COMMIT ./customer-service
 - docker tag $CUSTOMER_SERVICE:$COMMIT $CUSTOMER_SERVICE:$TAG
 - docker push $CUSTOMER_SERVICE
 
   # NOTIFICATION_SERVICE
-- export NOTIFICATION_SERVICE=gcr.io/voltaic-azimuth-192414/notification-service
+- export NOTIFICATION_SERVICE=sprhegde/notification-service
 - docker build -t $NOTIFICATION_SERVICE:$COMMIT ./notification-service
 - docker tag $NOTIFICATION_SERVICE:$COMMIT $NOTIFICATION_SERVICE:$TAG
 - docker push $NOTIFICATION_SERVICE
 
   # MONITORING
-- export MONITORING=gcr.io/voltaic-azimuth-192414/monitoring
+- export MONITORING=sprhegde/monitoring
 - docker build -t $MONITORING:$COMMIT ./monitoring
 - docker tag $MONITORING:$COMMIT $MONITORING:$TAG
 - docker push $MONITORING
 
   # PRODUCT SERVICE
-- export PRODUCT_SERVICE=gcr.io/voltaic-azimuth-192414/product-service
+- export PRODUCT_SERVICE=sprhegde/product-service
 - docker build -t $PRODUCT_SERVICE:$COMMIT ./product-service
 - docker tag $PRODUCT_SERVICE:$COMMIT $PRODUCT_SERVICE:$TAG
 - docker push $PRODUCT_SERVICE
-
-- gcloud config set project voltaic-azimuth-192414
-- gcloud config set compute/zone us-central1-a
-- gcloud auth activate-service-account --key-file sprhegde-d8b0d97ec19d.json
-- gcloud compute scp /home/travis/build/sprhegde/OrderMgmtRepo/docker-compose.yml sprhegde@instance-1:~/order-mgmt/docker-compose_new.yml --zone us-central1-a
-- gcloud compute ssh --zone us-central1-a sprhegde@instance-1 --command "cd order-mgmt 
-
-  docker login -u _json_key -p '$(cat sprhegde-d8b0d97ec19d.json)'  https://gcr.io 
-  
-  
-  docker run -v /var/run/docker.sock:/var/run/docker.sock -v /home/sprhegde/order-mgmt:/rootfs/home/sprhegde/order-mgmt -w=/rootfs/home/sprhegde/order-mgmt docker/compose:1.13.0 down
-  
-  sleep 10
-  
-  
-  
-  mv docker-compose.yml docker-compose_old.yml 
-  
-  mv docker-compose_new.yml docker-compose.yml
-  
-
-  docker pull gcr.io/voltaic-azimuth-192414/config:v2.7
-  
-  docker pull gcr.io/voltaic-azimuth-192414/registry:v2.7
-  
-  docker pull gcr.io/voltaic-azimuth-192414/gateway:v2.7
-  
-  docker pull gcr.io/voltaic-azimuth-192414/auth-service:v2.7
-  
-  docker pull gcr.io/voltaic-azimuth-192414/customer-service:v2.7
-  
-  docker pull gcr.io/voltaic-azimuth-192414/notification-service:v2.7
-  
-  docker pull gcr.io/voltaic-azimuth-192414/monitoring:v2.7
-  
-  docker pull gcr.io/voltaic-azimuth-192414/product-service:v2.7
-  
-  sleep 5
-  
-  
-  
-  docker run -v /var/run/docker.sock:/var/run/docker.sock -v /home/sprhegde/order-mgmt:/rootfs/home/sprhegde/order-mgmt -w=/rootfs/home/sprhegde/order-mgmt docker/compose:1.13.0 up -d rabbitmq 
-  
-  docker run -v /var/run/docker.sock:/var/run/docker.sock -v /home/sprhegde/order-mgmt:/rootfs/home/sprhegde/order-mgmt -w=/rootfs/home/sprhegde/order-mgmt docker/compose:1.13.0 up -d config
-
-  sleep 10
-  
-  
-  docker run -v /var/run/docker.sock:/var/run/docker.sock -v /home/sprhegde/order-mgmt:/rootfs/home/sprhegde/order-mgmt -w=/rootfs/home/sprhegde/order-mgmt docker/compose:1.13.0 up -d registry 
-  
-  docker run -v /var/run/docker.sock:/var/run/docker.sock -v /home/sprhegde/order-mgmt:/rootfs/home/sprhegde/order-mgmt -w=/rootfs/home/sprhegde/order-mgmt docker/compose:1.13.0 up -d
-  "
 
 
 
