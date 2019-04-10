@@ -17,6 +17,7 @@
 		<module>customer-service</module>
 		<module>notification-service</module>
 		<module>product-service</module>
+		<module>order-service</module>
+		<module>turbine-stream-service</module>
 	</modules>
-
 </project>
