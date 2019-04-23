@@ -1,6 +1,5 @@
 package com.ordermgmt.auth.service.security;
 
-import com.ordermgmt.auth.domain.User;
 import com.ordermgmt.auth.repository.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +17,6 @@ public class MongoUserDetailsService implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-		User user = repository.findOne(username);
-
-		if (user == null) {
-			throw new UsernameNotFoundException(username);
-		}
-
-		return user;
+		return repository.findById(username).orElseThrow(()->new UsernameNotFoundException(username));
 	}
 }

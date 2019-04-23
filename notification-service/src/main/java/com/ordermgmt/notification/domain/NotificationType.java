@@ -2,6 +2,8 @@ package com.ordermgmt.notification.domain;
 
 public enum NotificationType {
 
+	//BACKUP("backup.email.subject", "backup.email.text", "backup.email.attachment"),
+	//REMIND("remind.email.subject", "remind.email.text", null);
 	WELCOME("welcome.email.subject", "welcome.email.text", null);
 
 	private String subject;

@@ -2,14 +2,14 @@ package com.ordermgmt.auth.service.security;
 
 import com.ordermgmt.auth.domain.User;
 import com.ordermgmt.auth.repository.UserRepository;
-import com.ordermgmt.auth.service.security.MongoUserDetailsService;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
@@ -34,7 +34,7 @@ public class MongoUserDetailsServiceTest {
 
 		final User user = new User();
 
-		when(repository.findOne(any())).thenReturn(user);
+		when(repository.findById(any())).thenReturn(Optional.of(user));
 		UserDetails loaded = service.loadUserByUsername("name");
 
 		assertEquals(user, loaded);

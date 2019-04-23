@@ -1,19 +1,22 @@
 package com.ordermgmt.auth.repository;
 
-import com.ordermgmt.auth.AuthApplication;
 import com.ordermgmt.auth.domain.User;
-import com.ordermgmt.auth.repository.UserRepository;
-
+import com.ordermgmt.auth.service.security.MongoUserDetailsService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration;
+import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = AuthApplication.class)
+@RunWith(SpringRunner.class)
+@DataMongoTest
 public class UserRepositoryTest {
 
 	@Autowired
@@ -27,8 +30,9 @@ public class UserRepositoryTest {
 		user.setPassword("password");
 		repository.save(user);
 
-		User found = repository.findOne(user.getUsername());
-		assertEquals(user.getUsername(), found.getUsername());
-		assertEquals(user.getPassword(), found.getPassword());
+		Optional<User> found = repository.findById(user.getUsername());
+		assertTrue(found.isPresent());
+		assertEquals(user.getUsername(), found.get().getUsername());
+		assertEquals(user.getPassword(), found.get().getPassword());
 	}
 }

@@ -1,14 +1,16 @@
 package com.ordermgmt.auth.service;
 
-import com.ordermgmt.auth.domain.User;
-import com.ordermgmt.auth.repository.UserRepository;
+
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
+
+import com.ordermgmt.auth.domain.User;
+import com.ordermgmt.auth.repository.UserRepository;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -23,8 +25,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void create(User user) {
 
-		User existing = repository.findOne(user.getUsername());
-		Assert.isNull(existing, "user already exists: " + user.getUsername());
+		Optional<User> existing = repository.findById(user.getUsername());
+		existing.ifPresent(it-> {throw new IllegalArgumentException("user already exists: " + it.getUsername());});
 
 		String hash = encoder.encode(user.getPassword());
 		user.setPassword(hash);
@@ -34,3 +36,4 @@ public class UserServiceImpl implements UserService {
 		log.info("new user has been created: {}", user.getUsername());
 	}
 }
+
