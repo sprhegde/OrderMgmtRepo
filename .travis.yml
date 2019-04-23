@@ -18,7 +18,8 @@ deploy:
     - "/home/travis/.m2/repository/com/ordermgmt/customer-service/1.0-SNAPSHOT/customer-service-1.0-SNAPSHOT.jar"
     - "/home/travis/.m2/repository/com/ordermgmt/notification-service/1.0.0-SNAPSHOT/notification-service-1.0.0-SNAPSHOT.jar"
     - "/home/travis/.m2/repository/com/ordermgmt/product-service/1.0-SNAPSHOT/product-service-1.0-SNAPSHOT.jar"
-    - "/home/travis/.m2/repository/com/ordermgmt/product-service/1.0-SNAPSHOT/order-service-1.0-SNAPSHOT.jar"
+    - "/home/travis/.m2/repository/com/ordermgmt/order-service/1.0-SNAPSHOT/order-service-1.0-SNAPSHOT.jar"
+    - "/home/travis/.m2/repository/com/ordermgmt/turbine-stream-service/1.0-SNAPSHOT/turbine-stream-service-1.0-SNAPSHOT.jar"
     
   on:
     repo: sprhegde/OrderMgmtRepo

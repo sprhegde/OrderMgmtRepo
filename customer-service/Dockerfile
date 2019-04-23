@@ -1,7 +1,7 @@
 FROM java:8-jre
 MAINTAINER Shivaprasad Hegde <sprhegde@gmail.com>
 
-ADD https://github.com/sprhegde/OrderMgmtRepo/releases/download/v2.8/customer-service-1.0-SNAPSHOT.jar /app/
+ADD /home/travis/.m2/repository/com/ordermgmt/customer-service/1.0-SNAPSHOT/customer-service-1.0-SNAPSHOT.jar /app/
 CMD ["java", "-Xmx200m", "-jar", "/app/customer-service-1.0-SNAPSHOT.jar"]
 
 EXPOSE 6000
