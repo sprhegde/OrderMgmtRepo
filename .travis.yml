@@ -89,5 +89,17 @@ after_deploy:
 - docker tag $PRODUCT_SERVICE:$COMMIT $PRODUCT_SERVICE:$TAG
 - docker push $PRODUCT_SERVICE
 
+  # ORDER SERVICE
+- export ORDER_SERVICE=sprhegde/order-service
+- docker build -t $ORDER_SERVICE:$COMMIT ./order-service
+- docker tag $ORDER_SERVICE:$COMMIT $ORDER_SERVICE:$TAG
+- docker push $ORDER_SERVICE
+
+  # TURBINE STREAM SERVICE
+- export TURBINE_STREAM_SERVICE=sprhegde/turbine-stream-service
+- docker build -t $TURBINE_STREAM_SERVICE:$COMMIT ./turbine-stream-service
+- docker tag $TURBINE_STREAM_SERVICE:$COMMIT $TURBINE_STREAM_SERVICE:$TAG
+- docker push $TURBINE_STREAM_SERVICE
+
 
 
