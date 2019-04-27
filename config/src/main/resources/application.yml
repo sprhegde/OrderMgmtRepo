@@ -8,10 +8,11 @@ spring:
           #search-locations: classpath:/shared
   profiles:
      active: native
+  security:
+    user:
+      password: Shiva123   
 
 server:
   port: 8888
 
-security:
-  user:
-    password: Shiva123
+
