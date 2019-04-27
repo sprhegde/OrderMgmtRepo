@@ -4,7 +4,7 @@ spring:
       server:
         native:
           search-locations: file:/home/sprhegde/order-mgmt/config
-          #search-locations: D:/OrderManagement/config
+          #search-locations: D:/OrderManagement/confi
           #search-locations: classpath:/shared
   profiles:
      active: native
